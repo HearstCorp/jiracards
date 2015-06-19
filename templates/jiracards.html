@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for story_row in stories | batch(2, '&nbsp;') %}
+    <div class="row">
+        {% for story in story_row %}
+        <div class="col-xs-6">
+            <div class="panel">
+                <div class="panel-heading {{ story.epic_color_label }}">
+                    <h3 class="panel-title">#{{ story.id }}
+                        - {{ story.title }}</h3>
+                    <i>Added by {{ story.reporter }}</i>
+                    {% if story.epic_title %}
+                        <span class="label label-default pull-right">{{ story.epic_title }}</span>
+                    {% endif %}
+                </div>
+                <div class="panel-body">
+                    {% if story.description %}
+                    <p>{{ story.description }}</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% endfor %}
+{% endblock %}

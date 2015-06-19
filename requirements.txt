@@ -1,0 +1,4 @@
+Flask==0.10.1
+Flask-BasicAuth==0.2.0
+jira==0.47
+gunicorn==19.3.0

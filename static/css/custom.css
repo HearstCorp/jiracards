@@ -1,0 +1,53 @@
+@media screen {
+  body {
+    margin-top: 50px;
+  }
+}
+
+.container{
+  max-width: none !important;
+  width: 970px;
+}
+
+.panel {
+  min-height: 402px;
+  max-height: 402px;
+  overflow: hidden;
+  border-color: #aaa !important;
+}
+
+.panel-heading {
+  -webkit-print-color-adjust: exact;
+}
+
+.panel-heading.default-label { background-color: #555 !important; }
+.panel-heading.ghx-label-1 { background-color: #815b3a !important; }
+.panel-heading.ghx-label-2 { background-color: #f79232 !important; }
+.panel-heading.ghx-label-3 { background-color: #d39c3f !important; }
+.panel-heading.ghx-label-4 { background-color: #3b7fc4 !important; }
+.panel-heading.ghx-label-5 { background-color: #4a6785 !important; }
+.panel-heading.ghx-label-6 { background-color: #8eb021 !important; }
+.panel-heading.ghx-label-7 { background-color: #ac707a !important; }
+.panel-heading.ghx-label-8 { background-color: #654982 !important; }
+.panel-heading.ghx-label-9 { background-color: #f15c75 !important; }
+
+.panel-title {
+  font-size: 36px;
+  min-height: 140px;
+}
+
+.panel-title, .panel-heading i {
+  color: #fff !important;
+}
+
+.panel-body {
+  font-size: 16px;
+}
+
+.label-default {
+  font-size: 14px;
+  line-height: 16px;
+  color: #000 !important;
+  background-color: #fff !important;
+  border: none; !important;
+}

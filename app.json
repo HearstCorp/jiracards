@@ -1,0 +1,12 @@
+{
+  "name": "JIRA Cards",
+  "description": "An application that prints JIRA stories",
+  "repository": "https://github.com/HearstCorp/jiracards",
+  "env": {
+    "JIRA_HOST": "https://jira.atlassian.com",
+    "JIRA_USERNAME": "user",
+    "JIRA_PASSWORD": "password",
+    "BASIC_AUTH_USERNAME": "user",
+    "BASIC_AUTH_PASSWORD": "password"
+  }
+}
