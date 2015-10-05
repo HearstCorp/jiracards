@@ -9,7 +9,10 @@
                 <div class="panel-heading {{ story.epic_color_label }}">
                     <h3 class="panel-title">#{{ story.id }}
                         - {{ story.title }}</h3>
-                    <i>Added by {{ story.reporter }}</i>
+                    {% if story.points %}
+                        <span class="label label-default">{{ story.points }} SP</span>
+                    {% endif %}
+                     <i>Added by {{ story.reporter }}</i>
                     {% if story.epic_title %}
                         <span class="label label-default pull-right">{{ story.epic_title }}</span>
                     {% endif %}

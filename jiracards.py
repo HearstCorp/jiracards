@@ -33,13 +33,17 @@ def index():
                     epic_color_label = 'default-label'
 
                 i = jira.issue(issue.key)
+
+                story_points = getattr(i.fields, 'customfield_10004', None)
+
                 print_issues.append({
                     'id': i.key.split('-', 1)[-1],
                     'title': i.fields.summary,
                     'description': i.fields.description,
                     'reporter': i.fields.reporter.displayName,
+                    'points': int(story_points) if story_points else None,
                     'epic_title': epic_title,
-                    'epic_color_label': epic_color_label
+                    'epic_color_label': epic_color_label,
                 })
 
             return render_template('jiracards.html', stories=print_issues)
@@ -54,5 +58,5 @@ def index():
 
 
 if __name__ == '__main__':
-    app.run(port=5000)
+    app.run(port=5000, debug=True)
 
