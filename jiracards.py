@@ -1,12 +1,13 @@
 from flask import Flask, render_template, request
 from flask.ext.basicauth import BasicAuth
 from jira.client import GreenHopper
+from jira.resources import Issue
 
 app = Flask(__name__)
 app.config.from_object('settings')
 basic_auth = BasicAuth(app)
 
-jira = GreenHopper(
+gh = GreenHopper(
     {'server': app.config.get('JIRA_HOST')},
     basic_auth=(app.config.get('JIRA_USERNAME'),
                 app.config.get('JIRA_PASSWORD')))
@@ -14,15 +15,22 @@ jira = GreenHopper(
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    project_id = sprint_id = None
+    board_id = sprint_id = None
 
     if request.method == 'POST':
-        project_id = request.form.get('project_id', None)
+        board_id = request.form.get('board_id', None)
         sprint_id = request.form.get('sprint_id', None)
 
-        if project_id and sprint_id:
+        if board_id and sprint_id:
             print_issues = []
-            issues = jira.incompleted_issues(project_id, sprint_id)
+
+            # Get around python jira lib not getting incomplete issues properly at the moment
+            # issues = gh.incompleted_issues(board_id, sprint_id)
+            r_json = gh._get_json('rapid/charts/sprintreport?rapidViewId=%s&sprintId=%s' % (
+                board_id, sprint_id), base=gh.AGILE_BASE_URL)
+            issues = [
+                Issue(gh._options, gh._session, raw_issues_json)
+                for raw_issues_json in r_json['contents']['issuesNotCompletedInCurrentSprint']]
 
             for issue in issues:
                 try:
@@ -32,7 +40,7 @@ def index():
                     epic_title = None
                     epic_color_label = 'default-label'
 
-                i = jira.issue(issue.key)
+                i = gh.issue(issue.key)
 
                 story_points = getattr(i.fields, 'customfield_10004', None)
 
@@ -47,16 +55,15 @@ def index():
                 })
 
             return render_template('jiracards.html', stories=print_issues)
-    projects = jira.boards()
-    sprints = jira.sprints(project_id) if project_id else None
+    projects = gh.boards()
+    sprints = gh.sprints(board_id) if board_id else None
 
     return render_template('select-sprint.html',
                            projects=projects,
                            sprints=sprints,
-                           project_id=project_id,
+                           board_id=board_id,
                            sprint_id=sprint_id)
 
 
 if __name__ == '__main__':
     app.run(port=5000, debug=True)
-

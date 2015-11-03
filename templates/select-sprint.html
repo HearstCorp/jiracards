@@ -6,20 +6,20 @@
 <div class="well">
     <form action="" method="post">
         <div class="form-group">
-            <label for="project_id">Project</label>
-            <select class="form-control" id="project_id" name="project_id">
+            <label for="board_id">Project</label>
+            <select class="form-control" id="board_id" name="board_id">
                 <option value="">-- Select a project --</option>
               {% if projects %}
                 {% for p in projects %}
                     <option value="{{ p.id }}"
-                        {% if p.id == project_id|int %} selected{% endif %}>
+                        {% if p.id == board_id|int %} selected{% endif %}>
                       {{ p.name }}
                     </option>
                 {% endfor %}
               {% endif %}
             </select>
         </div>
-        {% if project_id %}
+        {% if board_id %}
         <div class="form-group">
             <label for="sprint_id">Sprint</label>
             <select class="form-control" id="sprint_id" name="sprint_id">
@@ -43,7 +43,7 @@
 {% block js %}
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        document.querySelector("#project_id").onchange = function () {
+        document.querySelector("#board_id").onchange = function () {
             this.form.submit();
         };
     });
